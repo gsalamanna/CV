@@ -1,0 +1,19 @@
+Aug 12th, 2011
+Moved from mypublications to myPubs
+myPubs is new and uses SPIRES bibtex output
+to compile: 
+latex myPubs
+bibtex myPubs
+latex myPubs
+latex myPubs
+
+***********
+
+Aug 29th, 2012
+Switched to INSPIRE-made publication list. Introduced pubsSalamanna.tex. See CHANGELOG
+
+**********
+
+Oct 31st, 2016
+
+salamanna_biblio.tex is standalone pub list from Inspire

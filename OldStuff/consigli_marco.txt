@@ -1,0 +1,26 @@
+Ciao Giuseppe,
+ 
+ mi pare che stai andando nella direzione giusta. 
+Il breve summary iniziale potrebbe essere reso forse piu' inicisivo,
+mettendo il Bs mixing come obiettivo prima. E dicendo che il (tuo) lavoro 
+sul TOF e' stato uno degli ingredienti fondamentali per la recente 
+scoperta del Bs mixing (senza sottolineare se ne fai parte o meno,
+l'hai fatto, hai le note che lo dimostrano  e basta).
+ 
+Per la parte piu' dettagliata, che poi non so se davvero qualcuno legge,
+penso che potresti mettere la parte sul TOF, incluso, la validazione 
+dei nuovi dati la scoperta della degradazione del TOF etc. etc. tutto 
+insieme. Si perde un po' nel discorso di combined PID. 
+ 
+Poi piu' che detector related activities, io scriverei proprio,
+Il TOF detector di CDF. 
+ 
+Da ultimo, ma qui non so come si usa, non sono sicuro che vuoi 
+dare i nomi dei tuoi "collaboratori". Secondo me o sono supervisor
+oppure non vale la pena. Pero' posso sbagliarmi. 
+Potresti usare una formula finale del tipo che questo lavoro 
+e' svolto in collaborazione con un gruppo di LBNL e di Padova...
+a group of LBNL and Padova....
+ 
+   ciao ciao 
+ 

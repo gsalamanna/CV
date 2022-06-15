@@ -1,0 +1,21 @@
+\documentclass[12pt]{article}   %or use your favorite doc class
+\usepackage[usenames,dvipsnames]{color}
+\renewcommand\refname{List of Publications of Giuseppe Salamanna \\
+\begin{small}
+In total I am an author of: 225 refereed publications by the ATLAS Collaboration and 146 by the CDF Collaboration.  
+
+%Selected publications where my contribution was most important are shown. A list of the most important non-refereed or internal ATLAS and CDF notes is also provided. 
+
+A full list of refereed publications follows. A list of the most important non-refereed or internal ATLAS and CDF notes can be found in the curriculum vitae file.  
+
+(Please note that a large number of Conference notes and non-refereed results on ATLAS Top quark results where my contribution was important, not included here, can be found at the following URL: {\rm https://twiki.cern.ch/twiki/bin/view/AtlasPublic/TopPublicResults})
+
+\end{small}
+}       %change as needed
+\providecommand{\href}[2]{#2}   %generates the href macro if needed
+\begin{document}
+   \nocite{*}                   %this uses *everything* in the .bib file
+%   \bibliography{myPubs_slim}        %or whatever your .bib file is
+   \bibliography{myPubs}        %or whatever your .bib file is
+   \bibliographystyle{utphys}   %if you use utphys.bst
+\end{document}   

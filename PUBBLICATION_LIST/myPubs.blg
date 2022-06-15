@@ -1,0 +1,48 @@
+This is BibTeX, Version 0.99c (TeX Live 2009/Debian)
+The top-level auxiliary file: myPubs.aux
+The style file: utphys.bst
+Database file #1: myPubs.bib
+Reallocated field_info (elt_size=4) to 10024 items from 5000.
+Warning--empty pages in Atlas:2011mor
+You've used 205 entries,
+            2328 wiz_defined-function locations,
+            1927 strings with 45529 characters,
+and the built_in function-call counts, 68700 in all, are:
+= -- 7627
+> -- 1632
+< -- 0
++ -- 614
+- -- 409
+* -- 6802
+:= -- 7404
+add.period$ -- 409
+call.type$ -- 205
+change.case$ -- 205
+chr.to.int$ -- 0
+cite$ -- 206
+duplicate$ -- 4175
+empty$ -- 6400
+format.name$ -- 409
+if$ -- 18401
+int.to.chr$ -- 0
+int.to.str$ -- 205
+missing$ -- 794
+newline$ -- 1008
+num.names$ -- 205
+pop$ -- 774
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 3434
+stack$ -- 0
+substring$ -- 2393
+swap$ -- 2361
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 1
+while$ -- 403
+width$ -- 208
+write$ -- 2015
+(There was 1 warning)
