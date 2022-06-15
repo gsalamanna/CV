@@ -1,0 +1,230 @@
+\documentclass{article}
+\usepackage{fncylab}
+\usepackage{tabularx}
+\usepackage{vita}
+\usepackage{ifthen}
+
+
+%----------------------------------------------------------------------
+
+\newboolean{pickrefereed}
+\newboolean{disablerefereed}
+\newcommand{       \Refereed}[0]{\setboolean{pickrefereed}{true}}
+\newcommand{    \NotRefereed}[0]{\setboolean{pickrefereed}{false}}
+\newcommand{\DisableRefereed}[0]{\setboolean{disablerefereed}{true}}
+\newcommand{ \EnableRefereed}[0]{\setboolean{disablerefereed}{false}}
+\DisableRefereed
+\Refereed
+
+\newboolean{flagrefereed}
+\newcommand{\FlagRefereed}[0]{\setboolean{flagrefereed}{true}}
+\newcommand{\DontFlagRefereed}[0]{\setboolean{flagrefereed}{false}}
+\DontFlagRefereed
+
+\newcommand{\RefereedFlag}{$^\dagger$}
+\newcommand{\SetRefereedFlag}[1]{\renewcommand{\RefereedFlag}{#1}}
+
+\newboolean{pickmostrelevant}
+\newboolean{disablemostrelevant}
+\newcommand{       \MostRelevant}[0]{\setboolean{pickmostrelevant}{true}}
+\newcommand{    \NotMostRelevant}[0]{\setboolean{pickmostrelevant}{false}}
+\newcommand{\DisableMostRelevant}[0]{\setboolean{disablemostrelevant}{true}}
+\newcommand{ \EnableMostRelevant}[0]{\setboolean{disablemostrelevant}{false}}
+\DisableMostRelevant
+\MostRelevant
+
+\newboolean{mytrue}
+\setboolean{mytrue}{true}
+\newboolean{myfalse}
+\setboolean{myfalse}{false}
+
+\newboolean{isrefereed}
+\newboolean{ismostrelevant}
+\newcommand{\IsRefereed}       [0]{\setboolean{isrefereed}{true}}
+\newcommand{\IsNotRefereed}    [0]{\setboolean{isrefereed}{false}}
+\newcommand{\IsMostRelevant}   [0]{\setboolean{ismostrelevant}{true}}
+\newcommand{\IsNotMostRelevant}[0]{\setboolean{ismostrelevant}{false}}
+
+\newboolean{go}
+%\newcommand{\ChooseFlag}[2]{}
+\newcommand{\ChooseFlag}[2]{
+#1
+\ifthenelse{
+\(
+\boolean{disablerefereed}\OR
+\(\boolean{pickrefereed}\AND\boolean{isrefereed}\)\OR
+\NOT\(\boolean{pickrefereed}\OR\boolean{isrefereed}\)
+\)
+\AND
+\(
+\boolean{disablemostrelevant}\OR
+\(\boolean{pickmostrelevant}\AND\boolean{ismostrelevant}\)\OR
+\NOT\(\boolean{pickmostrelevant}\OR\boolean{ismostrelevant}\)
+\)
+}
+{\setboolean{go}{true} \renewcommand{\AlexLabelPrefix}{}      }
+{\setboolean{go}{false}\renewcommand{\AlexLabelPrefix}{Unused}}
+
+\ifthenelse{\boolean{go}}
+ {
+  \ifthenelse{\boolean{flagrefereed}\AND\boolean{isrefereed}}
+             {\renewcommand{\EnumListFlag}{\RefereedFlag}}
+             {\renewcommand{\EnumListFlag}{}}
+  \item #2 \label{\AlexLabel}
+ }{}
+}
+
+%\(\(\NOT\boolean{pickmostrelevant}\)\AND\(\(\boolean{pickrefereed}\AND\(#1=0\)\)\OR\(\(\NOT\boolean{pickrefereed}\)\AND #1=1\)\)\)\OR\(\boolean{pickmostrelevant}\AND#2=0\)
+
+\newcommand{\alexcvreference}[1]{}
+\newcommand{\alexcvauthor}[1]{{\bf Authors:} #1}
+\newcommand{\alexcvtitle}[1]{{\bf Title:} #1}
+\newcommand{\alexcvjournal}[1]{{\bf Journal:} #1}
+\newcommand{\alexcvvolume}[1]{{\bf Volume:} #1}
+\newcommand{\alexcvpages}[1]{{\bf Pages:} #1}
+\newcommand{\alexcvyear}[1]{{\bf Date:} #1}
+\newcommand{\alexcvSLACcitation}[1]{}
+\newcommand{\alexcveprint}[1]{{\bf Electronic Reference:} #1}
+\newcommand{\alexcvcollaboration}[1]{{\bf Collaboration:} #1}
+\newcommand{\alexcvcdfnote}[1]{{\bf CDF internal note} #1}
+\newcommand{\alexcvatlnote}[1]{{\bf ATLAS internal note} #1}
+\newcommand{\alexcvnote}[1]{{\bf Additional Information:} #1}
+
+\newcommand{\alexcvsubmittedto}[1]{{\bf Submitted to:} #1}
+\newcommand{\alexcvconfproc}[1]{{\bf Proceedings of:} #1}
+\newcommand{\alexcvpublinfo}[1]{{\bf Publication:} #1}
+
+
+
+
+\renewcommand{\alexcvreference}[1]{}
+\renewcommand{\alexcvauthor}[1]{#1 }
+\renewcommand{\alexcvtitle}[1]{{``\it #1'', }}
+\renewcommand{\alexcvjournal}[1]{#1}
+\renewcommand{\alexcvvolume}[1]{#1, }
+\renewcommand{\alexcvpages}[1]{#1}
+\renewcommand{\alexcvyear}[1]{(#1)}
+\renewcommand{\alexcvSLACcitation}[1]{}
+\renewcommand{\alexcveprint}[1]{$\!\!$, (#1)}
+\renewcommand{\alexcvcollaboration}[1]{(#1 collaboration), }
+\renewcommand{\alexcvnote}[1]{#1}
+\renewcommand{\alexcvcdfnote}[1]{(CDF#1)}
+\renewcommand{\alexcvsubmittedto}[1]{Submitted to #1}
+\renewcommand{\alexcvconfproc}[1]{Proceedings of #1}
+\renewcommand{\alexcvpublinfo}[1]{ Publication #1}
+
+%------------------------------------------------------------------------------------
+
+%
+\setlength{\textwidth}{6in}
+\setlength{\oddsidemargin}{.25in}
+\setlength{\evensidemargin}{.25in}
+\setlength{\textheight}{8.37in}
+\setlength{\topmargin}{0in}
+%\setlength{\headsep}{.4in}
+%
+
+\newdatedcategory{Public Talks}
+\newdatedcategory{Teaching}
+\newdatedcategory{Schools}
+\newdatedcategory{Research Grant}
+\newdatedcategory{Committees}
+\newdatedcategory{Positions}
+\newdatedcategory{Scientific Leadership}
+\newcategory{Technical Skills}
+\newenumcategory{SP}{Selected Publications}
+\newenumcategory{IN}{Internal Notes}
+\newenumcategory{RP}{Refereed Publications}
+\newenumcategory{AP}{Additional Publications}
+%\newcategory{Publications}
+%
+%\raggedright
+%
+\begin{document}
+\name{\vbox{\vspace{1cm}}Giuseppe Salamanna}
+
+\businessaddress{
+NIKHEF \\
+Nationaal instituut voor subatomaire fysica \\
+Science Park 105 \\
+1098 XG Amsterdam \\
+The Netherlands 
+}
+\businesscontact{
+Office 54-3-035 \\
+Mailbox A18500 \\
+CERN \\
+CH-1211 Geneve 23 \\
+Switzerland \\
+Voice: +41 765-247035 \\
+Email: {\tt Giuseppe.Salamanna@cern.ch} 
+} 
+
+\begin{vita}
+\section*{Title of the PhD thesis}
+                 \large{{\it ``First observation of $B_{s}$ mixing at the CDF II experiment with 
+                    a newly developed Opposite Side $b$ flavour tagger using Kaons''}},
+
+                 under the advise of Prof. C. Dionisi and Dr. M. Rescigno,
+                 Universit\`a degli Studi di Roma {\em La Sapienza}, Rome, Italy \\ 
+
+\section*{Summary of the PhD thesis}
+My thesis describes the first observation of flavour oscillations in the $B_{s}$ meson system at the Collider
+Detector at Fermilab (CDF). It shows the development, calibration and performance evaluation of
+a new Opposite-side b flavour tagger using K mesons in CDF. It also describes the integration of this tagger 
+ with the other CDF flavour taggers and how this provides the necessary statistical significance to observe
+$B_{s}$ oscillations. The work is performed using data collected by CDF during the Run II of the Tevatron 
+hadron collider running at $\sqrt{s} = 1.96~TeV$ at Fermilab. The measurement of $\Delta m_{s}$ is one 
+of the milestones of the physics programme of the Tevatron Run II. 
+Along with the precise knowledge of its equivalent in the
+$B^{0}_{d}$ sector, $\Delta m_{d}$, this measurement provides a very powerful constraint to the
+Cabibbo-Kobayashi-Maskawa (CKM) matrix governing quark coupling in weak
+interactions. 
+Moreover it is sensitive to New Physics contributions from loop diagrams.
+CDF observes the $B_s$ oscillations with a statistical significance $>5~\sigma$ 
+and is able to measure their frequency. Several experimental ingredients 
+contribute to reach this level of significance, of which one of the most crucial is
+flavour tagging. This is the determination of the flavour of
+the b quark contained within a $B_s$ at creation, before oscillations occurred. 
+The effective number of signal events used in the $\Delta m_{s}$ measurement
+scales with the figure-of-merit of the combined flavour tagging used, $\varepsilon D^{2}$. 
+For my thesis I worked to enhance $\varepsilon D^{2}$. 
+I developed an algorithm that looks at the accompanying $b$ quark in the event and tags its flavour 
+from the electric charge of its daughter Kaon in the final state. In the thesis, the experimental 
+work necessary to achieve a performing tagger in such high track multiplicity environment is 
+described. I use particle identification and the displacement of $b$ Kaons from the Primary
+Vertex (PV) to discriminate signal Kaons from background like tracks from the underlying event. 
+By looking at the flight direction of the decaying $b$ hadrons in events with reconstructed secondary 
+decay vertices, I further improve my tagging purity, achieving a performance of the same 
+order of the other flavour taggers. I then combine my tagger with the other
+ flavour taggers by using a Neural Network (NN). The NN allows to account for correlations
+among taggers arising from looking at the same physics process with different 
+experimental objects. In the thesis I prove that the OSKT enhances
+the performances of the other tags when correlated and that this provides an   
+increase in the tagging performances, quantified in $\approx 20\%$ of the 
+tagging effectiveness. By doing so, the desired statistical significance
+ is achieved and the last chapter is devoted to describe the $\Delta m_{s}$ measurement.
+This shows the signal selection and lifetime measurement, which are the other components
+of the $\Delta m_{s}$ measurement. The measured value $17.77 \pm 0.10 (stat) \pm 0.07 (syst)~ps^{-1}$
+is presented and the uncertainties reported. Finally, the impact on flavour physics is discussed.  
+
+\section*{Composition of thesis committee}
+\begin{itemize}
+\item President: Prof. Luca Trentadue (Universit\`a degli Studi di Parma, Parma, Italy)
+\item Prof. Biagio Saitta (Universit\`a degli Studi di Cagliari, Cagliari, Italy)
+\item Prof. Claudio Luci (Universit\`a degli Studi di Roma {\em La Sapienza}, Rome, Italy)
+\item Prof. Clara Matteuzzi (Universit\`a degli Studi di Milano {\em Bicocca}, Milan, Italy)
+\end{itemize}
+
+
+
+\end{vita}
+
+%-------------------------------------------------------------------------------
+
+%\section*{Research Plans}
+%\input{research_interest_atlas.tex}
+
+%\section*{Teaching Activity}
+
+\end{document}

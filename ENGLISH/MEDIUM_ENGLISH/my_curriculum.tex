@@ -1,0 +1,409 @@
+\documentclass{article}
+\usepackage{fncylab}
+\usepackage{tabularx}
+\usepackage{vita}
+\usepackage{ifthen}
+
+
+%----------------------------------------------------------------------
+
+\newboolean{pickrefereed}
+\newboolean{disablerefereed}
+\newcommand{       \Refereed}[0]{\setboolean{pickrefereed}{true}}
+\newcommand{    \NotRefereed}[0]{\setboolean{pickrefereed}{false}}
+\newcommand{\DisableRefereed}[0]{\setboolean{disablerefereed}{true}}
+\newcommand{ \EnableRefereed}[0]{\setboolean{disablerefereed}{false}}
+\DisableRefereed
+\Refereed
+
+\newboolean{flagrefereed}
+\newcommand{\FlagRefereed}[0]{\setboolean{flagrefereed}{true}}
+\newcommand{\DontFlagRefereed}[0]{\setboolean{flagrefereed}{false}}
+\DontFlagRefereed
+
+\newcommand{\RefereedFlag}{$^\dagger$}
+\newcommand{\SetRefereedFlag}[1]{\renewcommand{\RefereedFlag}{#1}}
+
+\newboolean{pickmostrelevant}
+\newboolean{disablemostrelevant}
+\newcommand{       \MostRelevant}[0]{\setboolean{pickmostrelevant}{true}}
+\newcommand{    \NotMostRelevant}[0]{\setboolean{pickmostrelevant}{false}}
+\newcommand{\DisableMostRelevant}[0]{\setboolean{disablemostrelevant}{true}}
+\newcommand{ \EnableMostRelevant}[0]{\setboolean{disablemostrelevant}{false}}
+\DisableMostRelevant
+\MostRelevant
+
+\newboolean{mytrue}
+\setboolean{mytrue}{true}
+\newboolean{myfalse}
+\setboolean{myfalse}{false}
+
+\newboolean{isrefereed}
+\newboolean{ismostrelevant}
+\newcommand{\IsRefereed}       [0]{\setboolean{isrefereed}{true}}
+\newcommand{\IsNotRefereed}    [0]{\setboolean{isrefereed}{false}}
+\newcommand{\IsMostRelevant}   [0]{\setboolean{ismostrelevant}{true}}
+\newcommand{\IsNotMostRelevant}[0]{\setboolean{ismostrelevant}{false}}
+
+\newboolean{go}
+%\newcommand{\ChooseFlag}[2]{}
+\newcommand{\ChooseFlag}[2]{
+#1
+\ifthenelse{
+\(
+\boolean{disablerefereed}\OR
+\(\boolean{pickrefereed}\AND\boolean{isrefereed}\)\OR
+\NOT\(\boolean{pickrefereed}\OR\boolean{isrefereed}\)
+\)
+\AND
+\(
+\boolean{disablemostrelevant}\OR
+\(\boolean{pickmostrelevant}\AND\boolean{ismostrelevant}\)\OR
+\NOT\(\boolean{pickmostrelevant}\OR\boolean{ismostrelevant}\)
+\)
+}
+{\setboolean{go}{true} \renewcommand{\AlexLabelPrefix}{}      }
+{\setboolean{go}{false}\renewcommand{\AlexLabelPrefix}{Unused}}
+
+\ifthenelse{\boolean{go}}
+ {
+  \ifthenelse{\boolean{flagrefereed}\AND\boolean{isrefereed}}
+             {\renewcommand{\EnumListFlag}{\RefereedFlag}}
+             {\renewcommand{\EnumListFlag}{}}
+  \item #2 \label{\AlexLabel}
+ }{}
+}
+
+%\(\(\NOT\boolean{pickmostrelevant}\)\AND\(\(\boolean{pickrefereed}\AND\(#1=0\)\)\OR\(\(\NOT\boolean{pickrefereed}\)\AND #1=1\)\)\)\OR\(\boolean{pickmostrelevant}\AND#2=0\)
+
+\newcommand{\alexcvreference}[1]{}
+\newcommand{\alexcvauthor}[1]{{\bf Authors:} #1}
+\newcommand{\alexcvtitle}[1]{{\bf Title:} #1}
+\newcommand{\alexcvjournal}[1]{{\bf Journal:} #1}
+\newcommand{\alexcvvolume}[1]{{\bf Volume:} #1}
+\newcommand{\alexcvpages}[1]{{\bf Pages:} #1}
+\newcommand{\alexcvyear}[1]{{\bf Date:} #1}
+\newcommand{\alexcvSLACcitation}[1]{}
+\newcommand{\alexcveprint}[1]{{\bf Electronic Reference:} #1}
+\newcommand{\alexcvcollaboration}[1]{{\bf Collaboration:} #1}
+\newcommand{\alexcvcdfnote}[1]{{\bf CDF internal note} #1}
+\newcommand{\alexcvatlnote}[1]{{\bf ATLAS internal note} #1}
+\newcommand{\alexcvatlpubnote}[1]{{\bf ATLAS public note} #1}
+\newcommand{\alexcvnote}[1]{{\bf Additional Information:} #1}
+
+\newcommand{\alexcvsubmittedto}[1]{{\bf Submitted to:} #1}
+\newcommand{\alexcvconfproc}[1]{{\bf Proceedings of:} #1}
+\newcommand{\alexcvpublinfo}[1]{{\bf Publication:} #1}
+
+
+
+
+\renewcommand{\alexcvreference}[1]{}
+\renewcommand{\alexcvauthor}[1]{#1 }
+\renewcommand{\alexcvtitle}[1]{{``\it #1'', }}
+\renewcommand{\alexcvjournal}[1]{#1}
+\renewcommand{\alexcvvolume}[1]{#1, }
+\renewcommand{\alexcvpages}[1]{#1}
+\renewcommand{\alexcvyear}[1]{(#1)}
+\renewcommand{\alexcvSLACcitation}[1]{}
+\renewcommand{\alexcveprint}[1]{$\!\!$, (#1)}
+\renewcommand{\alexcvcollaboration}[1]{(#1 collaboration), }
+\renewcommand{\alexcvnote}[1]{#1}
+\renewcommand{\alexcvcdfnote}[1]{(CDF#1)}
+\renewcommand{\alexcvsubmittedto}[1]{Submitted to #1}
+\renewcommand{\alexcvconfproc}[1]{Proceedings of #1}
+\renewcommand{\alexcvpublinfo}[1]{ Publication #1}
+
+%------------------------------------------------------------------------------------
+
+%
+\setlength{\textwidth}{6in}
+\setlength{\oddsidemargin}{.25in}
+\setlength{\evensidemargin}{.25in}
+\setlength{\textheight}{8.37in}
+\setlength{\topmargin}{0in}
+%\setlength{\headsep}{.4in}
+%
+
+\newdatedcategory{Public Talks and Seminars}
+\newdatedcategory{Teaching}
+\newdatedcategory{Schools}
+\newdatedcategory{Research Grants}
+\newdatedcategory{Committees}
+\newdatedcategory{Positions}
+\newdatedcategory{Scientific Leadership}
+\newcategory{Technical Skills}
+\newenumcategory{SP}{Selected Publications}
+\newenumcategory{IN}{Internal and Public Notes}
+\newenumcategory{RP}{Refereed Publications}
+\newenumcategory{AP}{Additional Publications}
+%\newcategory{Publications}
+%
+%\raggedright
+%
+\begin{document}
+\name{\vbox{\vspace{1cm}}Giuseppe Salamanna}
+
+\businessaddress{
+NIKHEF \\
+Nationaal instituut voor subatomaire fysica \\
+Science Park 105 \\
+1098 XG Amsterdam \\
+The Netherlands 
+}
+\businesscontact{
+Office 54-3-035 \\
+Mailbox A18500 \\
+CERN \\
+CH-1211 Geneve 23 \\
+Switzerland \\
+Voice: +41 765-247035 \\
+Email: {\tt Giuseppe.Salamanna@cern.ch} 
+} 
+
+\begin{vita}
+
+{\it Post-doctoral} staff at NIKHEF, under a {\it VIDI} Research
+Grant awarded to Dr.~I.~van~Vulpen by the Netherlands Organisation for
+Scientific Research (NWO). Based at CERN, where I work full-time on
+the {\it ATLAS} experiment at the Large Hadron Collider (LHC) $p-p$ collider. \\
+I am actively involved in three aspects of data preparation and
+analysis: measurement of the $t\bar{t}$ production cross-section; muon
+reconstruction and identification; Level-1 Muon trigger time
+calibration.  \\
+In the past I have been active in trigger studies for New Physics scenarios in ATLAS. \\
+I have obtained my PhD working on the CDF-II experiment, optimizing the CDF Particle Identification
+capabilities and developing a 
+ Flavour tagging used for the measurement of the $B_s$ mixing frequency. 
+
+\vbox{\vspace{0.5cm}}
+
+\begin{Degrees}
+January 2007 & Ph.D. in Physics,
+                 with the following thesis:
+                 {\it ``First observation of $B_{s}$ mixing at the CDF II experiment with 
+                    a newly developed Opposite Side $b$ flavour tagger using Kaons''},
+                 under the advise of Prof. C. Dionisi and Dr. M. Rescigno,
+                 Universit\`a degli Studi di Roma {\em La Sapienza}, Rome, Italy \\ \\
+
+September 2003 & B.S. and M.S. (``Laurea in Fisica'') with top marks (110/110),
+                 with the following thesis:
+                 {\it ``Study of the resolution of the Time-Of-Flight detector for the Fermilab CDF experiment''},  
+                 under the advise of Prof. C. Dionisi and Dr. S. Giagu, 
+                 Universit\`a degli Studi di Roma {\em La Sapienza}, Rome, Italy \\ \\
+
+July 1998 & High School Diploma (``Maturit\`a Classica'') with top marks (60/60),\\
+          & Liceo Classico Pilo Albertelli, Rome, Italy\\
+\end{Degrees}
+
+
+
+\newpage
+\begin{Positions}
+2008 -- now             & Post-doctoral staff at NIKHEF, based at CERN \\
+2008 -- now             & Member of the ATLAS collaboration as NIKHEF staff \\
+2007                                & Research Associate position at the University of Washington, based at CERN \\
+2006                                & Visiting scientist at the Lawrence Berkeley National Laboratory to collaborate with the local CDF group on the $B_{s}$ mixing analyses  \\
+2002 -- 2006               & Visiting scientist at the Fermi National Accelerator Laboratory for the CDF experiment\\
+2003 -- 2006               & PhD student, with the CDF group at Universit\`a degli Studi di Roma {\em La Sapienza}\\
+2002 -- 2006               & Member of CDF Run II collaboration as an affiliate of University  of Rome\\
+2003 -- 2006               & INFN Associate Fellow (``Associazione'') for the CDF experiment \\
+2004 -- 2005                  & Teaching assistant (``Aiuto alla didattica'') in Classical Physics (Classical mechanics, thermodynamics, electromagnetism) at the University of Rome {\em La Sapienza} \\
+\end{Positions}
+
+\begin{Research Grants}
+2003 -- 2006               & Scholarship accompanying my PhD courses, assigned by the Department of Physics, Universit\`a degli Studi di Roma {\em La Sapienza}, after ranking\\
+\end{Research Grants}
+
+\begin{Schools}
+2004 & CERN European Summer School, Sant Feliu de Guixols, Spain\\
+\end{Schools}
+
+\begin{Teaching}
+2010 & Supervision of the Ph.D. student N.Ruckstuhl (NIKHEF) for her studies on the muon momentum scale and resolution using an inclusive muon sample from LHC collisions and with cosmic ray events.\\
+2009 & Supervision of E.J.Schioppa (INFN-Roma) as a CERN summer student, for his study concerning the timing of the Level-1 Muon barrel trigger with cosmic rays.\\
+2008 & Supervision of the NIKHEF Ph.D. student A.Doxiadis (NIKHEF) for his studies on fake leptons rates to be applied to $t\bar{t}$ analysis.\\
+2007 & Supervision of the Univeristy of Washington Ph.D. student D.Ventura for his study on Hidden Valley models.\\
+2005 & Supervisor of INFN Roma1 Italian student for his work on flavour tagging using $\Lambda$ baryons, during his summer student program at CDF \\
+2004 -- 2005 & Teaching assistant (Classical mechanics, thermodynamics and electromagnetism), Undergraduate courses in Pharmacy, University of Rome ``La Sapienza'', Rome, Italy\\
+\end{Teaching}
+
+\newpage
+\begin{Public Talks and Seminars}
+Sep 2010 & ``ATLAS Electroweak results'' , The XIX International Workshop on High Energy Physics and Quantum Field Theory, Golitsyno, Moscow, Russia \\
+Feb 2010 & ``Measurement of the Top quark pair production at ATLAS with the first data from LHC'' CPPM Laboratory Seminar, Centre de Physique de Particules de Marseille, Marseille, France \\   
+Ott 2009 & ``Results from the ATLAS Barrel Level-1 Muon Trigger timing studies using combined trigger and offline tracking'' 2009 IEEE Nuclear Science Symposium and Medical Imaging Conference (IEEE NSS MIC 09), Orlando, FL, USA \\
+Gen 2009 & ``Early Top physics with ATLAS at the LHC'' Physics@FOM Veldhoven 2009 \\
+Jul 2006 & ``Measurement of $B_{s}$ oscillations at CDF'' 7th International Conference on Hyperons, Charm And Beauty Hadrons (BEACH06),
+             Lancaster, UK. \\
+Apr 2006 & ``Measurement of $B_{s}$ oscillation frequency at CDF''
+            Incontri di Fisica delle Alte Energie, Pavia, Italy,\\
+Feb 2006 & ``$B_{s}$ and sensitivity to new physics at CDF''
+            Third workshop on $b$ physics, Parma, Italy,\\
+Jul 2005 & ``Techniques for $B_{s}$ Mixing at CDF'' 
+           poster at the Hadron Collider Physics Symposium 2005, Les Diablerets, Switzerland\\
+Apr 2005 & ``Opposite side B-flavour tagging using combined TOF and dE/dx particle identification technique''
+           American Physics Society April Meeting 2005, Tampa, FL, USA \\
+Feb 2006 & ``$b$ flavour tagging with Kaons for B physics at CDF''
+           RTN ``The third generation as a probe for new physics'' meeting, Karlsruhe, Germany\\
+\end{Public Talks and Seminars}
+
+\begin{Technical Skills}
+\item {\bf Programming}: C, C++, {\tt Root} analysis package, ATHENA ATLAS analysis framework.
+      Knowledgeable in Linux, Windows both at the user and administrator level
+\item {\bf Computer Hardware}: PC including several peripherals and interfaces
+\item {\bf Trigger}: calibration of Level-1 trigger systems for High Energy Physics.
+\item {\bf HEP Detectors}: operation, calibration
+\end{Technical Skills}
+\vspace{2cm}
+\newpage
+
+\begin{References}
+  \vbox{\vspace{5mm}}           \\ 
+  Prof. Stanislaus M.C. Bentvelsen  \\
+  NIKHEF \\
+  Science Park 105 \\
+  +31 (20) 592-5140 Voice \\
+  1098 XG Amsterdam,  The Netherlands \\
+  {\tt stanb@nikhef.nl} \\
+  \vbox{\vspace{5mm}}                             \\                                                
+  Dr. Richard Hawkings \\
+  CERN, European Organization for Nuclear Research \\
+  Geneve 23, CH-1211, Switzerland \\
+  +41 (22) 767 78432 Voice      \\
+  {\tt richard.hawkings@cern.ch}       \\
+  \vbox{\vspace{5mm}}           \\ 
+  Dr. Ludovico Pontecorvo \\
+  Istituto Nazionale di Fisica Nucleare - Sezione di Roma, and \\
+  CERN, European Organization for Nuclear Research \\
+  Geneve 23, CH-1211, Switzerland \\
+  +41 (22) 767 78432 Voice      \\
+  {\tt ludovico.pontecorvo@cern.ch}       \\
+\end{References}
+% \vbox{\vspace{5cm}}
+
+\section*{Current and past research Activities}
+\setcounter{page}{1}
+\subsection*{Current activities in ATLAS}
+\subsubsection*{Top physics analysis} 
+\begin{itemize}
+\item Active in the study of $t\bar{t}$ events with high-$P_{T}$
+leptons in the final state, selected by the {\it ATLAS} trigger.  
+\item Co-author of first measurement of the $t\bar{t}$ pair production cross-section at the
+LHC which $p-p$ collisions: in particular I have worked with the Nikhef group on the cross-section measurement in the semileptonic $t\bar{t}$ decays, with one
+lepton, Missing Transverse Energy and high-$P_{T}$ jets in the final state, using a fit to the reconstructed hadronic top mass. The unbinned fit uses information on b-tagging to 
+distinguish between signal and W+jets background; the result is almost 
+insensitivite to W+jets rates higher with respect to expectations from simulation.  
+\item coordinator of the sub-group of the ATLAS Top Working Group
+that studies and optimizes the muon selections for Top analysis, both at the trigger level and offline. The group
+includes about 10 people from different institutions, studying ways to select muons from $t \rightarrow W 
+\rightarrow \mu + X$ decays, and reject secondary muons coming from quark decays, such as heavy flavours. 
+The definition and optimization of variables like calorimeter and track-based isolation
+and the final performance of the selections is documented in
+Ref.~\ref{AtlNotes:1} and Ref.~\ref{AtlNotes:12}. 
+\item main editor of the ATLAS note on Lepton selection and efficiency measurement used in the first cross-section measurement. The note (Ref.\ref{AtlNotes:12}) 
+covers all the relevant information concerning electrons and muons and provides muon trigger and offline efficiency and momentum scale factors to re-scale the simulation to the signal acceptance on data. Tag-and-probe techniques using Z bosons are used, including an estimation of the muon fake rate directly from data.
+\item In the past, {\it supervision} of work of PhD student A.~Doxiadis, Nikhef, in his study, to estimate the secondary lepton content in the $t\bar{t}$ sample using topological information (e.g. impact parameter) and isolation. 
+\item co-author of the Top {\tt Event Data Model} adopted by the
+ATLAS Top WG as a common framework for all Top analysis (Ref.~\ref{AtlNotes:3}).\\
+\end{itemize}
+
+\subsubsection*{Muon reconstruction and analysis of performance}
+\begin{itemize}
+\item one of the developers of the {\tt MOORE} program for tracking in the ATLAS Muon Spectrometer, together with a group of colleagues
+ mainly from Nikhef. In particular, I have developed a second stage segment finding algorithm, 
+which recovers hit segments in one ore more layers of the muon chambers, if they were not associated in the early stages of pattern recognition.
+(improvement of momentum resolution for tracks in events with high hit multiplicity in the 
+chambers, contributing to improve especially high-$P_{T}$ muon physics in ATLAS.) \\
+\item first public measurement of the momentum scale offset and resolution of muons in the ATLAS Muon Spectrometer (MS) relative to the Inner Detector (ID),
+on an inclusive muon sample from LHC $p-p$ collisions corresponding to 
+$\approx 200~nb^{-1}$. {\it Supervising} the Nikhef student N.~Ruckstuhl, I studied the features of 
+the momentum imbalance between the MS and ID measurements on combined muons as a function of kinematics and 
+detector characteristics. Estimation of the contribution to the inclusive sample due
+to a significant fraction of muons coming from pion and kaon decays in flight (bias in the resolution measurement from the MS-ID momentum imbalance distribution):  a template technique is used, which is documented fully in the ATLAS note \ref{AtlNotes:14}. 
+The measurement has been published and presented at the ICHEP 2010 conference (Ref.~\ref{AtlNotes:8}). The results have also been used 
+in the first ATLAS measurement of the $W \rightarrow \mu\nu$ production cross-section and observation of $Z \rightarrow \mu\mu$ production (Ref.~\ref{AtlNotes:11}). \\
+\item in the past, responsible for the validation of the {\tt MOORE}  software chain on simulated samples, 
+to monitor performances and stability of the various involved algorithms.
+\item co-author of the ATLAS document on muon reconstruction performance
+ on Monte Carlo events (Ref.~\ref{mio:2009cscmuon}).\\
+\end{itemize}
+
+\subsubsection*{Level-1 Muon trigger timing calibration}
+\begin{itemize}
+\item {\it commissioning} of the ATLAS Level-1 Muon trigger in the central part of the spectrometer ("Barrel"), provided by 
+Resistive Plate Chambers (RPC), using cosmic ray muons.  I have developed a strategy to synchronize the various trigger units within 
+the same Bunch Crossing interval (25 ns), by studying the jitters in the various RPC trigger elements with respect 
+to an independent and precise time reference, given by an external trigger source. The trigger signals were compared with the presence of 
+ offline muon tracks, in order to suppress fake triggers. Crucial to have a reliable Level-1 Muon trigger at 
+the first stage of the on-line event selection and be able to perform any physics with muons in the final state at ATLAS. Synchronizatio of more than 70$\%$ of the sectors with cosmic rays (before LHC collisions). I have also developed the tools used in the ATLAS production for the Level-1 Muon barrel trigger
+calibration with LHC collisions. 
+\item results presented at the 2009 IEEE NSS-MIC Conference (Ref.~\ref{mio:2009ieee}).
+\end{itemize}
+
+\subsection*{Past analysis activities in ATLAS}
+\begin{itemize}
+\item Research Associate at the University of Washington (UW), with a post-doctoral position for ATLAS (2007). 
+Leading the development of specific trigger signatures in ATLAS to detect long lived particles decaying up to several meters away of the primary vertex in the ATLAS detector, expected in several non-Standard Model scenarios (e.g. Hidden Valley models). 
+With my UW colleagues, I have studied the effect of new quantities from tracking and calorimetry to be used at the Level-2 trigger. Specific triggers are now run online in the ATLAS trigger menu for collisions. 
+\item The results are documented in Ref.~\ref{mio:2009hv},~\ref{AtlNotes:4}. 
+\end{itemize}
+
+\subsection*{Past activities in CDF}
+\subsubsection*{Flavour tagging and $B_{s}$ mixing analysis}
+\begin{itemize}
+\item Active in the Collider Detector at Fermilab (CDF) experiment for 4 years (2002-2006). Master and PhD at University of Roma ``La Sapienza''. My research activities involved experimental HEP in the heavy flavour sector. 
+\item Development of flavour tagging using K mesons produced in $B_{s}$ signal events, in the cascade decay of accompanying $b$ quark: for the first time non-null tagging performance achieved for Opposite-Side Kaon tagging at a hadron collider, where a very high track multiplicity is present (Ref.~\ref{CDFNotes:9}).
+\item contributor in combination of CDF $b$-flavour taggers in Neural Network to enhance CDF sensitivity to $B_{s}^{0}$ mixing (Ref.~\ref{CDFNotes:8}). 
+\item main contribution to the first measurement of the frequency, $\Delta M_{s}$: crucial constraint to New Physics in the flavour sector; attempted at LEP, SLC and Tevatron and uniquely possible at CDF (Ref.~\ref{Abulencia:2006obs}) thanks to excellent proper time resolution and enhanced flavour tagging capabilities.\\
+\item In the summer 2006 work with the CDF group at the Lawrence Berkeley National Laboratory, directed by Prof.~M.~D.~Shapiro: alternative measurement of $\Delta M_{s}$ using the Fourier Tranform approach:  direct look at the space of frequencies, to search for a peak in the frequency distribution, as the Transform space of the time domain, instead of using standard {\it amplitude method}. 
+\item calibration and monitoring of time resolution of CDF Time-of-Flight (TOF) detector, crucial tool for particle identification in CDF, used for flavour tagging of the $b$ quark in the $B_{s}^{0}$ meson by looking at tracks coming from the same fragmentation process (SSKT) or from decays of the accompanying $b$ quark (OSKT). Main tagging power of CDF for $B_{s}^{0}$  provided by Kaon tagging, thanks to excellent TOF performances  (Ref.~\ref{CDFNotes:10},  \ref{CDFNotes:12} and \ref{CDFNotes:18} ). 
+\end{itemize}
+
+
+\SetAttitionalText{This list contains the publications for which I was a main author. Refereed papers are indicated with a \RefereedFlag.}
+\begin{Selected Publications}
+\EnableMostRelevant
+\MostRelevant
+\DisableRefereed
+\FlagRefereed
+\input{../PUBBLICATION_LIST/publist_giuseppe}
+\end{Selected Publications}
+
+\clearpage
+
+\SetAttitionalText{This list covers the internal and public notes of the CDF and ATLAS experiments where I was (co-)author.}
+\begin{Internal and Public Notes}
+\DisableMostRelevant
+\DisableRefereed
+\input{../PUBBLICATION_LIST/mynotes}
+\end{Internal and Public Notes}
+
+\clearpage
+
+\SetAttitionalText{This list covers the refereed articles co-authored by me.}
+\begin{Refereed Publications}
+% Pick only Refereed papers
+\EnableRefereed
+\Refereed
+% without flagging them
+%\DontFlagRefereed
+% and removing objects from the ``most relevant'' list
+\EnableMostRelevant
+\NotMostRelevant
+\input{../PUBBLICATION_LIST/publist_giuseppe}
+\end{Refereed Publications}
+
+%\vbox{\vspace{20cm}}
+\clearpage
+
+\end{vita}
+
+%-------------------------------------------------------------------------------
+
+%\section*{Research Plans}
+%\input{research_interest_atlas.tex}
+
+%\section*{Teaching Activity}
+
+\end{document}

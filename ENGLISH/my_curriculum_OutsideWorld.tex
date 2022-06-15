@@ -1,0 +1,307 @@
+\documentclass{article}
+\usepackage{fncylab}
+\usepackage{tabularx}
+\usepackage{vita}
+\usepackage{ifthen}
+
+
+%----------------------------------------------------------------------
+
+\newboolean{pickrefereed}
+\newboolean{disablerefereed}
+\newcommand{       \Refereed}[0]{\setboolean{pickrefereed}{true}}
+\newcommand{    \NotRefereed}[0]{\setboolean{pickrefereed}{false}}
+\newcommand{\DisableRefereed}[0]{\setboolean{disablerefereed}{true}}
+\newcommand{ \EnableRefereed}[0]{\setboolean{disablerefereed}{false}}
+\DisableRefereed
+\Refereed
+
+\newboolean{flagrefereed}
+\newcommand{\FlagRefereed}[0]{\setboolean{flagrefereed}{true}}
+\newcommand{\DontFlagRefereed}[0]{\setboolean{flagrefereed}{false}}
+\DontFlagRefereed
+
+\newcommand{\RefereedFlag}{$^\dagger$}
+\newcommand{\SetRefereedFlag}[1]{\renewcommand{\RefereedFlag}{#1}}
+
+\newboolean{pickmostrelevant}
+\newboolean{disablemostrelevant}
+\newcommand{       \MostRelevant}[0]{\setboolean{pickmostrelevant}{true}}
+\newcommand{    \NotMostRelevant}[0]{\setboolean{pickmostrelevant}{false}}
+\newcommand{\DisableMostRelevant}[0]{\setboolean{disablemostrelevant}{true}}
+\newcommand{ \EnableMostRelevant}[0]{\setboolean{disablemostrelevant}{false}}
+\DisableMostRelevant
+\MostRelevant
+
+\newboolean{mytrue}
+\setboolean{mytrue}{true}
+\newboolean{myfalse}
+\setboolean{myfalse}{false}
+
+\newboolean{isrefereed}
+\newboolean{ismostrelevant}
+\newcommand{\IsRefereed}       [0]{\setboolean{isrefereed}{true}}
+\newcommand{\IsNotRefereed}    [0]{\setboolean{isrefereed}{false}}
+\newcommand{\IsMostRelevant}   [0]{\setboolean{ismostrelevant}{true}}
+\newcommand{\IsNotMostRelevant}[0]{\setboolean{ismostrelevant}{false}}
+
+\newboolean{go}
+%\newcommand{\ChooseFlag}[2]{}
+\newcommand{\ChooseFlag}[2]{
+#1
+\ifthenelse{
+\(
+\boolean{disablerefereed}\OR
+\(\boolean{pickrefereed}\AND\boolean{isrefereed}\)\OR
+\NOT\(\boolean{pickrefereed}\OR\boolean{isrefereed}\)
+\)
+\AND
+\(
+\boolean{disablemostrelevant}\OR
+\(\boolean{pickmostrelevant}\AND\boolean{ismostrelevant}\)\OR
+\NOT\(\boolean{pickmostrelevant}\OR\boolean{ismostrelevant}\)
+\)
+}
+{\setboolean{go}{true} \renewcommand{\AlexLabelPrefix}{}      }
+{\setboolean{go}{false}\renewcommand{\AlexLabelPrefix}{Unused}}
+
+\ifthenelse{\boolean{go}}
+ {
+  \ifthenelse{\boolean{flagrefereed}\AND\boolean{isrefereed}}
+             {\renewcommand{\EnumListFlag}{\RefereedFlag}}
+             {\renewcommand{\EnumListFlag}{}}
+  \item #2 \label{\AlexLabel}
+ }{}
+}
+
+%\(\(\NOT\boolean{pickmostrelevant}\)\AND\(\(\boolean{pickrefereed}\AND\(#1=0\)\)\OR\(\(\NOT\boolean{pickrefereed}\)\AND #1=1\)\)\)\OR\(\boolean{pickmostrelevant}\AND#2=0\)
+
+\newcommand{\alexcvreference}[1]{}
+\newcommand{\alexcvauthor}[1]{{\bf Authors:} #1}
+\newcommand{\alexcvtitle}[1]{{\bf Title:} #1}
+\newcommand{\alexcvjournal}[1]{{\bf Journal:} #1}
+\newcommand{\alexcvvolume}[1]{{\bf Volume:} #1}
+\newcommand{\alexcvpages}[1]{{\bf Pages:} #1}
+\newcommand{\alexcvyear}[1]{{\bf Date:} #1}
+\newcommand{\alexcvSLACcitation}[1]{}
+\newcommand{\alexcveprint}[1]{{\bf Electronic Reference:} #1}
+\newcommand{\alexcvcollaboration}[1]{{\bf Collaboration:} #1}
+\newcommand{\alexcvcdfnote}[1]{{\bf CDF internal note} #1}
+\newcommand{\alexcvatlnote}[1]{{\bf ATLAS internal note} #1}
+\newcommand{\alexcvatlpubnote}[1]{{\bf ATLAS public note} #1}
+\newcommand{\alexcvatlconfnote}[1]{{\bf ATLAS conference note} #1}
+
+\newcommand{\alexcvnote}[1]{{\bf Additional Information:} #1}
+
+\newcommand{\alexcvsubmittedto}[1]{{\bf Submitted to:} #1}
+\newcommand{\alexcvconfproc}[1]{{\bf Proceedings of:} #1}
+\newcommand{\alexcvpublinfo}[1]{{\bf Publication:} #1}
+
+
+
+
+\renewcommand{\alexcvreference}[1]{}
+\renewcommand{\alexcvauthor}[1]{#1 }
+\renewcommand{\alexcvtitle}[1]{{``\it #1'', }}
+\renewcommand{\alexcvjournal}[1]{#1}
+\renewcommand{\alexcvvolume}[1]{#1, }
+\renewcommand{\alexcvpages}[1]{#1}
+\renewcommand{\alexcvyear}[1]{(#1)}
+\renewcommand{\alexcvSLACcitation}[1]{}
+\renewcommand{\alexcveprint}[1]{$\!\!$, (#1)}
+\renewcommand{\alexcvcollaboration}[1]{(#1 collaboration), }
+\renewcommand{\alexcvnote}[1]{#1}
+\renewcommand{\alexcvcdfnote}[1]{(CDF#1)}
+\renewcommand{\alexcvsubmittedto}[1]{Submitted to #1}
+\renewcommand{\alexcvconfproc}[1]{Proceedings of #1}
+\renewcommand{\alexcvpublinfo}[1]{ Publication #1}
+
+%------------------------------------------------------------------------------------
+
+%
+\setlength{\textwidth}{6in}
+\setlength{\oddsidemargin}{.25in}
+\setlength{\evensidemargin}{.25in}
+\setlength{\textheight}{8.37in}
+\setlength{\topmargin}{0in}
+%\setlength{\headsep}{.4in}
+%
+
+\newdatedcategory{Invited talks at international conferences}
+\newdatedcategory{Additional talks and seminars}
+%\newcategory{Student Supervision}
+\newdatedcategory{Schools}
+\newdatedcategory{Awards}
+\newdatedcategory{Committees}
+\newdatedcategory{Teaching}
+\newdatedcategory{Employment history}
+%\newdatedcategory{Scientific responsibilities and roles}
+\newdatedcategory{Refereeing of scientific publications}
+%\newcategory{Scientific and technical Skills}
+%\newcategory{Languages}
+%\newcategory{Travelling experience}
+\newenumcategory{SP}{Selected Publications}
+\newenumcategory{IN}{Internal and Public Notes}
+\newenumcategory{RP}{Refereed Publications}
+\newenumcategory{AP}{Additional Publications}
+%\newcategory{Publications}
+%
+%\raggedright
+%
+\begin{document}
+\name{\vbox{\vspace{1cm}}Giuseppe Salamanna}
+
+\businessaddress{
+Department of Mathematics and Physics \\
+Roma Tre University \\
+via della vasca navale, 84 \\
+00176 Rome \\
+Italy
+}
+\businesscontact{
+Office Phone: +39-06-5733-7382 \\
+Mobile Phone: +39-327-7306-578 \\
+Email: {\tt Giuseppe.Salamanna@cern.ch} \\
+LinkedIn profile: {it.linkedin.com/in/salamanna}
+} 
+
+\begin{vita}
+%\vbox{\vspace{0.5cm}}
+
+\section*{Basic data}
+\begin{itemize}
+\item Born in Rome, Italy
+\item 35 year old
+\item Italian national
+\end{itemize}
+
+\begin{Education}
+Jan 2007 & Ph.D. in Physics at Universit\`a degli Studi di Roma {\em La Sapienza}, Rome, Italy. \\
+Sep 2003 & B.S. and M.S. (``Laurea in Fisica'') at Universit\`a degli Studi di Roma {\em La Sapienza}, Rome, Italy.  \\
+\end{Education}
+
+
+\begin{Employment history}
+Apr 2014 - present  & Lecturer at Roma Tre University (Italy), based in Rome \\ \\ 
+Apr 2011 - Mar 2014 & Research Associate at Queen Mary, University of London (UK), based in London \\ \\
+Mar 2008 - Feb 2011  & Post-doctoral staff at NIKHEF (The Netherlands), based at CERN, Geneva, Switzerland \\ \\
+Jan 2007 - Feb 2008  & Research Associate at the University of Washington (USA), based at CERN, Geneva, Switzerland \\ \\
+\end{Employment history}
+\newpage
+
+\section*{Scientific and technical Skills}
+\begin{itemize}
+\item Large dataset analysis and statistical techniques: 
+\begin{itemize} 
+\item Design, development and optimization of analysis strategies for the discrimination of (rare) physics signals from large background processes in particle physics with large data sets at the Large Hadron Collider, CERN. 
+\item identification of trends in measurable experimental quantities that allow to discriminate between signal and noise; and estimation of the remaining levels of background from ad hoc control samples;
+\item extensive experience and knowledge of the working principles of the advanced machine learning techniques (such as boosted decision trees, neural networks) for data mining ({\it especially useful in combining experimental quantities each with little discriminating power and largely correlated with each other});
+\item in-depth knowledge and long time experience with use of Monte Carlo simulations for the optimization of data mining strategies in the search for new physics signals; tuning of the modelling of measurable physics quantities (both in terms of rates and shapes) to what actually measured in data;
+\item use of refined statistical estimators such as the profile likelihood one for the evaluation of the statistical significance of a signal observation or the extraction of a physics parameter, constraining at the same time the associated systematic uncertainties ({\it nuisance parameters});
+\end{itemize}
+\item Developed computing experience, both in terms of code writing and distributed computing for the handling of large datasets:
+\begin{itemize}
+\item long time experience with the Grid and distributed computing to sift through upwards of 30 petabytes of data produced annually in LHC collisions and select interesting physics events (Higgs boson, top quarks).
+\item development of algorithms to track trajectory of charged particles through particle detectors, including basic experience of Kalman filters;
+\item working proficiency of C++ (all algorithmic development, data mining and statistical analysis conducted in this language on a daily basis); 
+\item good work-related knowledge of python; 
+\item in-depth knowledge of Linux operating systems, user knowledge of Windows and Mac OS.  
+\item proficiency in use of Microsoft Office suite;
+\end{itemize}
+\item Functioning and calibration of measuring devices: tracking and energy measurement; and of fast electronics and data aquisition systems in the context of particle physics; 
+\end{itemize}
+
+\section*{Scientific responsibilities and roles}
+\begin{itemize}
+\item coordination role in the discovery of the Higgs boson with the ATLAS detector at the CERN LHC: editor in charge of the publication and convener of the analysis team for the search for the associated production of Higgs bosons and top quarks in a specific final state (with many electrons and muons);
+\item coordination of a large team of scientists (about 40) from several different universities world-wide, for the centralized optimization, calibration of simulated samples and recommendation of the best practice to evaluate systematic uncertainties for all top quark analysis in the ATLAS experiment;
+\item editor in charge for the ATLAS conference note on the measurement of energy of muons in all ATLAS: coordination of analysis from 6 institutions using results from resonances and single muons. Results presented at international conferences;
+\item co-convener and editor in charge of the ATLAS conference note on the measurement of the top quark pair production cross-section measurement using advanced statistical techniques (kinematic fit) and b-tagging. Results presented at international conferences.
+\item member of the Local Organizing Committee of the TOP2012 conference (Winchester, UK, 2012) and Chief Editor of the conference proceedings;
+\item coordinator of the ATLAS Top UK national group which brings together all the British analysis teams involved in Top quark physics, during my London years;
+\item Conferences: internal reviewer for ATLAS conference proceedings, Chair in Conference talk rehearsal sessions for the ATLAS experiment, 
+\end{itemize}
+
+\section*{Publications}
+Co-author of more than 400 peer-reviewed publications in the context of the CDF and ATLAS particle physics experiments in the last 10 years. I have been the main author of more than 10 of them.
+
+\begin{Refereeing of scientific publications}
+Mar 2012 & Invited referee of the "Electroweak model and constraints on new physics" section of the Particle Data Group "Review of Particle Physics" for 2012. \\
+\end{Refereeing of scientific publications}
+\newline
+\begin{Awards}
+2013 & Winner of the Italian ``Rita Levi Montalcini'' fellowship awarded to outstanding junior faculty working abroad to take on an academic position in Italy. The committee selected 24 candidates from all fields of science. \\ \\ 
+2003 -- 2006               & Scholarship accompanying my PhD courses, assigned by the Department of Physics, Universit\`a degli Studi di Roma {\em La Sapienza}. \\
+\end{Awards}
+
+\newpage
+\begin{Invited talks at international conferences}
+Dec 2014 & ``Search for the Higgs boson in the ttH production mode using the ATLAS detector'', Kruger 2014 conference on discovery physics at the LHC, Kruger National Park, South Africa \\ \\
+Jul 2012 & ``Measurement of the Top quark mass'' , 36th International Conference on High Energy Physics (ICHEP 2012), Melbourne, Australia \\ \\
+
+Sep 2010 & ``ATLAS Electroweak results'' , The XIX International Workshop on High Energy Physics and Quantum Field Theory, Golitsyno, Moscow, Russia \\ \\
+
+Oct 2009 & ``Results from the ATLAS Barrel Level-1 Muon Trigger timing studies using combined trigger and offline tracking'' 2009 IEEE Nuclear Science Symposium and Medical Imaging Conference (IEEE NSS MIC 09), Orlando, FL, USA \\ \\
+
+Jul 2006 & ``Measurement of $B_{s}$ oscillations at CDF'' 7th International Conference on Hyperons, Charm And Beauty Hadrons (BEACH06),
+             Lancaster, UK \\ \\
+Apr 2006 & ``Measurement of $B_{s}$ oscillation frequency at CDF''
+            Incontri di Fisica delle Alte Energie, Pavia, Italy\\ \\
+\end{Invited talks at international conferences}
+I have also given several other talks and seminars at international academic institutions in France, Germany, the Netherlands and the UK.
+\newline
+\begin{Teaching}
+2014-15 & Course of sub-nuclear physics and course of particle physics phenomenology for the Master degree in Physics, Roma Tre University. \\ \\
+2004 & Teaching assistant (Classical mechanics, thermodynamics and electromagnetism), Undergraduate courses, University of Rome, La Sapienza.\\ \\
+\end{Teaching}
+
+\section*{Student Supervision}
+Between summer 2006 and now I have supervised 8 students from 5 different institutes, at the undergraduate, master and PhD level. The subjects of their work spanned from hardware and calibrations of electronics, to online event selections to analysis. All of them have successfully completed, or are on track to complete, their PhD in physics.
+
+\section*{Languages}
+\begin{itemize}
+\item Italian, native 
+\item English, full reading and writing proficiency 
+\item French, working proficiency 
+\item Spanish, basic knowledge
+\end{itemize}
+
+\section*{Travelling experience}
+Originally from Rome. Lived for 4 years in Geneva, Switzerland; and for 3 years in London, UK. Also lived in the Chicago area (USA) and in Amsterdam (the Netherlands) for shorter periods of time. \\ 
+Well travelled, visited several tens of Countries for work or leisure, very keen on travelling.
+\newpage
+
+\section*{Complement: Research Activities}
+%\setcounter{page}{1}
+Here follows a more detailed (and slightly technical) description of my past and current activities, aimed at giving a fuller idea of where my expertise and experience lie.
+\subsection*{ATLAS (2007-current)}
+\subsubsection*{Data analysis}
+I am involved in several aspects of the ATLAS Top quark and Higgs boson physics programme, with work on: 
+\begin{itemize}
+\item preparation of the common software, the study and optimization of particle selections for all ATLAS Top quark measurements;
+\item primary developer of the selection chain and estimation of backgrounds for the search of associated production of the Higgs bosons with top quarks, hidden by background occurring at 2 times to several orders of magnitudes higher rate;
+\item primary author of several complementary measurements of the top quark properties using a likelihood fitting technique based on Monte Carlo templates; 
+\item development and calibration of algorithms to identify quarks of a specific flavour (long-lived b quarks) within jets of particles. This involves algorithms to identify particle trajectory and finding physics quantities to distinguish specific particle decays from b-quarks. 
+\item developement of specific on-line, fast selections (1 micro-second decision time), using calorimetric and muon information, to detect hypothetical new particles
+\end{itemize}
+\subsubsection*{Muon particle tracking algorithms}
+I have developed the algorithm to reconstruct the trajectory of muons through the ATLAS detecting volume, using hits of the inner tracking layers, accounting for energy loss in calorimetry, matching with hits in outer, dedicated muon detector. Extrapolation using Kalman filters and use of missing hits in expected trajectory also employed. In collaboration with a small group of colleagues from the Netherlands and CERN.
+\subsubsection*{Level-1 Muon trigger time alignment}
+I have developed and performed a technique to synchronize the Level-1 Muon trigger (on-line, fast selection of particles) to maximize the event efficiency. 
+
+\subsection*{CDF (2002-2006)}
+\subsubsection*{Study of time resolution of the Time-of-Flight detector}
+I have been in charge of studying the contributions to the resolution from tracking and electronics of the Time-of-Flight detector of the CDF experiment at the Fermilab (USA). 
+
+\subsubsection*{First observation of $B_{s}$ oscillations and measurement of their frequency $\Delta M_{s}$}
+I have been part of the team that has achieved the first observation of the oscillations of $B_{s}$ mesons and their frequency measurement: I have contributed through the development of a flavour tagging algorithm and set-up of a Neural Network to combine it with similar algorithms.
+\end{vita}
+
+%-------------------------------------------------------------------------------
+
+%\section*{Research Plans}
+%\input{research_interest_atlas.tex}
+
+%\section*{Teaching Activity}
+
+\end{document}
